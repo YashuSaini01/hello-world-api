@@ -1,9 +1,8 @@
 pipeline {
-
     agent any
 
-    options {
-        skipDefaultCheckout(true)
+    tools {
+        jdk 'JDK-21'
     }
 
     stages {
@@ -18,6 +17,7 @@ pipeline {
             steps {
                 bat 'java -version'
                 bat 'where java'
+                bat 'echo JAVA_HOME=%JAVA_HOME%'
             }
         }
 
