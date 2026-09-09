@@ -14,6 +14,13 @@ pipeline {
             }
         }
 
+        stage('Check Java') {
+            steps {
+                bat 'java -version'
+                bat 'where java'
+            }
+        }
+
         stage('Build and Test') {
             steps {
                 bat 'mvnw.cmd clean package'
