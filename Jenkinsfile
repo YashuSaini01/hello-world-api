@@ -1,4 +1,5 @@
 pipeline {
+
     agent any
 
     tools {
@@ -7,34 +8,27 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Check Java') {
-            steps {
-                bat 'java -version'
-                bat 'where java'
-                bat 'echo JAVA_HOME=%JAVA_HOME%'
-            }
-        }
-
         stage('Build and Test') {
             steps {
                 bat 'mvnw.cmd clean package'
+            }
+        }
+
+        stage('Check Docker') {
+            steps {
+                bat 'docker --version'
+                bat 'docker info'
             }
         }
     }
 
     post {
         success {
-            echo 'Build and tests completed successfully.'
+            echo 'Pipeline completed successfully.'
         }
 
         failure {
-            echo 'Build failed.'
+            echo 'Pipeline failed.'
         }
     }
 }
