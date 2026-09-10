@@ -32,6 +32,23 @@ pipeline {
                 bat 'docker images'
             }
         }
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_TOKEN'
+                    )
+                ]) {
+                    bat '''
+                        echo %DOCKER_TOKEN% | docker login -u %DOCKER_USERNAME% --password-stdin
+                        docker push yashsaini1/hello-world-api:1.0
+                        docker logout
+                    '''
+                }
+            }
+        }
     }
 
     post {
