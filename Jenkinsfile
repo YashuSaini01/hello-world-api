@@ -26,6 +26,12 @@ pipeline {
                 bat 'docker build -t yashsaini1/hello-world-api:1.0 .'
             }
         }
+
+        stage('Verify Docker Image') {
+            steps {
+                bat 'docker images'
+            }
+        }
     }
 
     post {
